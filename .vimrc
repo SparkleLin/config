@@ -11,7 +11,12 @@ syntax on
 "启动gVIM时最大化
 au GUIEnter * simalt ~x
 "默认字体为Consolas，字体大小为13
-set guifont=Consolas:h13
+"
+if has("gui_gtk2")
+    set guifont=Consolas\ 11
+else
+    set guifont=Consolas:h11
+endif
 
 iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 
