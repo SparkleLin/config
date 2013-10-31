@@ -1,0 +1,20 @@
+[user]
+    name = ltang
+    email = ltang@microstrategy.com
+[core]
+	autocrlf = false
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    lg = log -p
+    cm = commit -m
+    ui = update-index
+    lf = log --pretty=format:"%h|%s"
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    ui = auto

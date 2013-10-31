@@ -1,4 +1,6 @@
 config
 ======
 
-configuration file for vim/screen/git
+configuration files for vim/screen/git/bash
+
+Powered by [ssnau](https://github.com/ssnau/env)
