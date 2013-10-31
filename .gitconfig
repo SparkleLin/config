@@ -3,12 +3,14 @@
     email = ltang@microstrategy.com
 [core]
 	autocrlf = false
+	whitespace = cr-at-eol
 [alias]
     st = status
     ci = commit
     br = branch
     co = checkout
     df = diff
+    dfig = diff --ignore-space-at-eol
     lg = log -p
     cm = commit -m
     ui = update-index
