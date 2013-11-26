@@ -4,7 +4,7 @@ source $VIMRUNTIME/mswin.vim
 behave mswin
 
 set nu!
-colorscheme torte
+colorscheme molokai
 syntax enable
 syntax on
 
@@ -15,7 +15,7 @@ au GUIEnter * simalt ~x
 if has("gui_gtk2")
     set guifont=Consolas\ 11
 else
-    set guifont=Consolas:h11
+    set guifont=Consolas:h13
 endif
 
 iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
@@ -23,8 +23,8 @@ iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 " forbid producing backup files
 set nobackup
 
-set tags=tags;
-set autochdir
+"set tags=./tags;
+"set autochdir
 
 set smartindent
 set tabstop=4
@@ -33,6 +33,12 @@ set expandtab
 
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
+
+let tlist_js_settings = 'javascript;s:string;a:array;o:object;f:function'
+
+"F8: Switch on/off Tagbar
+"nnoremap <silent> <F8> :TagbarToggle <CR>
+"let g:tagbar_ctags_bin = 'ctags -f - --format=2 --excmd=pattern --extra= --fields=nksaSmt myfile'
 
 let g:winManagerWindowLayout='FileExplorer|TagList'
 nmap wm :WMToggle<cr>
@@ -84,3 +90,47 @@ set encoding=prc
 
 set shell=C:/Windows/System32/cmd.exe
 set shellslash
+
+"ctrlp configuration
+let g:ctrlp_open_multiple_files = 'v'
+let g:ctrlp_max_files = 0
+let g:ctrlp_by_filename = 1
+let g:ctrlp_use_caching = 1000
+let g:ctrlp_max_depth = 10
+let g:ctrlp_cache_dir = '~/.cache/ctrlp'
+
+if has("gui_gtk2")
+    set wildignore+=*/tmp/*,*/test/*,*.jar,*.swp
+else
+    set wildignore+=*\\tmp\\*,*\\test\\*,*.jar,*.swp
+endif
+
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\v[\/](\.(git)|BIN|Sdk|SDKSolutions|3rdParty|lost\+found|build|Resource|JBProjects|ASPxMSTRWeb|QE|docs|Resource_Editor|utilities|donet)$',
+    \ 'file': '\v\.(log|jar|properties|doc|jpx|class|bat|pl|gif|jpg|png|jpeg)$'
+    \}
+
+""Convert to html function
+"function! MyToHtml(line1, line2)
+  "" make sure to generate in the correct format
+  "exec "colorscheme ". "default"
+
+  "let old_css = 1
+  "if exists('g:html_use_css')
+    "let old_css = g:html_use_css
+  "endif
+  "let g:html_use_css = 0
+
+  "" generate and delete unneeded lines
+  "exec a:line1.','.a:line2.'TOhtml'
+  "%g/<body/normal k$dgg
+
+  "" convert body to a table
+  "%s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*>/<table \1 cellPadding=0><tr><td><font color=\2>/
+  "%s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
+
+  "" restore old setting
+  "let g:html_use_css = old_css
+  ""colorscheme = g:oldColorScheme;
+"endfunction
+"command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
