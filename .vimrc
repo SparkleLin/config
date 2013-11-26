@@ -20,8 +20,9 @@ endif
 
 iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 
-" forbid producing backup files
-set nobackup
+" set backup files
+set backup
+set backupext = .bak
 
 "set tags=./tags;
 "set autochdir
