@@ -8,16 +8,52 @@ colorscheme molokai
 syntax enable
 syntax on
 
+"detect the os
+let g:os = "unknown"
+if has('win32')
+    let g:os = "windows"
+else "Assume it is UNIX with uname
+    let uname = substitute(system('uname'), "\n", "", "")
+    if uname == "SunOS"
+        let g:os = "sun"
+    elseif uname == "Linux"
+        let g:os = "linux"
+    elseif uname == "Darwin"
+        let g:os = "osx"
+    endif 
+endif
+
+""========================================================================================================
+"ctrlp configuration
+set runtimepath ^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_working_path_mode = 'ra'
+
+if g:os == "windows"
+    set wildignore+=*\\tmp\\*,*.zip,*.exe
+else
+    set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+endif
+
+let g:ctrlp_custom_ignore = {
+    \ 'dir': '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v\.(exe|so|dll)$',
+    \ 'link': 'some_bad_symbolic_links',
+    \}
+
+"end ctrlp configuration
+""========================================================================================================
+
 "启动gVIM时最大化
 au GUIEnter * simalt ~x
 "默认字体为Consolas，字体大小为13
 "
-if has("gui_gtk2")
-    set guifont=Consolas\ 11
+if g:os == "windows"
+    set guifont=DejaVu\ Sans\ Mono\ 11
 else
     set guifont=Consolas:h13
 endif
 
+<<<<<<< HEAD
 iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 
 " set backup files
