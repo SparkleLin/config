@@ -1,0 +1,30 @@
+#!/bin/bash
+
+commands=("backup" "ll" "shutdown" "reboot" "tstart" "tstop")
+
+case "$1" in
+    ${commands[0]})
+        python ~/.pyCmd/backup.py
+        ;;
+    ${commands[1]})
+        ls -al
+        ;;
+    ${commands[2]})
+        sudo shutdown -h now
+        ;;
+    ${commands[3]})
+        sudo shutdown -r now
+        ;;
+    ${commands[4]})
+        sudo /opt/tomcat/bin/startup.sh
+        ;;
+    ${commands[5]})
+        sudo /opt/tomcat/bin/shutdown.sh
+        ;;
+      "ls")
+         echo ${commands[@]}
+         ;;
+      *)
+        echo "command doesn't support, please contact adminstrator"
+        ;;
+esac
