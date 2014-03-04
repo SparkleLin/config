@@ -51,6 +51,7 @@ set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set autoindent
 
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
@@ -115,3 +116,13 @@ let g:ctrlp_custom_ignore = {
 "
 :iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 :iab xuser <c-r>="User: Sparkle Lin, Email: Sparklelin(at)outlook.com"<C-I>
+
+"===========================pathogen configuration=======================
+call pathogen#infect()
+
+"===========================Code Snippets================================
+let snippets_dir = $VIM.'\.vim\snippets\'
+
+"===========================Node Dict====================================
+au FileType javascript set dictionary+=$VIM.'\.vim\dict\node.dict'
+
