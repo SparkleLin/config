@@ -8,57 +8,25 @@ colorscheme molokai
 syntax enable
 syntax on
 
-"detect the os
-let g:os = "unknown"
-if has('win32')
-    let g:os = "windows"
-else "Assume it is UNIX with uname
-    let uname = substitute(system('uname'), "\n", "", "")
-    if uname == "SunOS"
-        let g:os = "sun"
-    elseif uname == "Linux"
-        let g:os = "linux"
-    elseif uname == "Darwin"
-        let g:os = "osx"
-    endif 
-endif
-
-""========================================================================================================
-"ctrlp configuration
-set runtimepath ^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_working_path_mode = 'ra'
-
-if g:os == "windows"
-    set wildignore+=*\\tmp\\*,*.zip,*.exe
-else
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-endif
-
-let g:ctrlp_custom_ignore = {
-    \ 'dir': '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v\.(exe|so|dll)$',
-    \ 'link': 'some_bad_symbolic_links',
-    \}
-
-"end ctrlp configuration
-""========================================================================================================
-
 "启动gVIM时最大化
 au GUIEnter * simalt ~x
 "默认字体为Consolas，字体大小为13
 "
-if g:os == "windows"
-    set guifont=DejaVu\ Sans\ Mono\ 11
+if has("gui_gtk2")
+    set guifont=Consolas\ 11
 else
     set guifont=Consolas:h13
 endif
 
-<<<<<<< HEAD
 iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 
 " set backup files
 set backup
-set backupext = .bak
+set backupext=.bak
+set backupdir=./.backup
+
+" set swap file directory
+set directory=./.backup
 
 "set tags=./tags;
 "set autochdir
@@ -89,31 +57,33 @@ let g:miniBufExplMapWindowNavArrows=1
 nnoremap <silent> <F12> :A<CR>
 nnoremap <silent> <F3> :Grep<CR>
 
-set diffexpr=MyDiff()
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  if &c_Co>1 syntax enable endif
-  let eq = ''
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      let cmd = '""' . $VIMRUNTIME . '\diff"'
-      let eq = '"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-endfunction
+"set diffexpr=
+if has('win32')
+    set diffexpr=MyDiff() 
+    function MyDiff() 
+      let opt = '-a --binary ' 
+      if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif 
+      if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif 
+      let arg1 = v:fname_in 
+      if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif 
+      let arg2 = v:fname_new 
+      if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif 
+      let arg3 = v:fname_out 
+      if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif 
+      let eq = '' 
+      if $VIMRUNTIME =~ ' ' 
+        if &sh =~ '\<cmd' 
+          let cmd = '"' . $VIMRUNTIME . '\diff"' 
+          let eq = '""' 
+        else 
+          let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"' 
+        endif 
+      else 
+        let cmd = $VIMRUNTIME . '\diff' 
+      endif 
+      silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq 
+    endfunction 
+endif
 
 function s:SetMainScript()
   let s:mainfile = bufname('%')
@@ -125,8 +95,11 @@ set fileencodings=gb2312,gb18030,utf-8
 set termencoding=utf-8
 set encoding=prc 
 
-set shell=C:/Windows/System32/cmd.exe
-set shellslash
+if has("gui_gtk2")
+    set shell=c:\\cygwin\\bin\\bash
+    set shellcmdflag=--login\ -c
+    set shellxquote=\"
+endif
 
 "ctrlp configuration
 let g:ctrlp_open_multiple_files = 'v'
@@ -146,28 +119,3 @@ let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/](\.(git)|BIN|Sdk|SDKSolutions|3rdParty|lost\+found|build|Resource|JBProjects|ASPxMSTRWeb|QE|docs|Resource_Editor|utilities|donet)$',
     \ 'file': '\v\.(log|jar|properties|doc|jpx|class|bat|pl|gif|jpg|png|jpeg)$'
     \}
-
-""Convert to html function
-"function! MyToHtml(line1, line2)
-  "" make sure to generate in the correct format
-  "exec "colorscheme ". "default"
-
-  "let old_css = 1
-  "if exists('g:html_use_css')
-    "let old_css = g:html_use_css
-  "endif
-  "let g:html_use_css = 0
-
-  "" generate and delete unneeded lines
-  "exec a:line1.','.a:line2.'TOhtml'
-  "%g/<body/normal k$dgg
-
-  "" convert body to a table
-  "%s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*>/<table \1 cellPadding=0><tr><td><font color=\2>/
-  "%s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
-
-  "" restore old setting
-  "let g:html_use_css = old_css
-  ""colorscheme = g:oldColorScheme;
-"endfunction
-"command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
