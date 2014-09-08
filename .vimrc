@@ -1,4 +1,10 @@
 set nocompatible
+
+" load configuration for Vundle
+if filereadable(expand("~/.vimrc.bundles"))
+    source ~/.vimrc.bundles
+endif
+
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
@@ -116,9 +122,6 @@ let g:ctrlp_custom_ignore = {
 "
 :iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 :iab xuser <c-r>="User: Sparkle Lin, Email: Sparklelin(at)outlook.com"<C-I>
-
-"===========================pathogen configuration=======================
-call pathogen#infect()
 
 "===========================Code Snippets================================
 let snippets_dir = $VIM.'\.vim\snippets\'
