@@ -110,7 +110,7 @@
 # alias ls='ls -hF --color=tty'                 # classify files in colour
 # alias dir='ls --color=auto --format=vertical'
 # alias vdir='ls --color=auto --format=long'
-# alias ll='ls -l'                              # long list
+# alias ll='ls -al'                              # long list
 # alias la='ls -A'                              # all but . and ..
 # alias l='ls -CF'                              #
 
@@ -201,7 +201,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-#add by ssnau to detect os
+# detect OS
 UNAME=$(uname)
 if [ "$UNAME" == "Linux" ] ; then
     OS="linux"
@@ -209,10 +209,9 @@ elif [ "$UNAME" == "Darwin" ] ; then
     OS="mac"
 elif [[ "$UNAME" == CYGWIN* || "$UNAME" == MINGW* ]] ; then
     OS="windows"
+else
+    OS="unknown"
 fi
-
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
 
 # don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
@@ -289,9 +288,14 @@ else
     alias vdir='ls --color=auto --format=long'
 fi
 
+# Interactive operaion
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 # some more ls aliases
 alias vi='vim'
-alias ll='ls -l --hide=*.{pyc,swp}'
+alias ll='ls -l --hide=*.{pyc,swp,bak}'
 alias la='ls -A'
 alias l='ls -CF'
 alias grep='grep --color=auto'
@@ -307,23 +311,3 @@ alias egrep='egrep --color=auto'
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
-
-#Show the current git branch
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
-PS1="\\w \e[0;35m\$(parse_git_branch)\e[m> "
-
-if [ "$OS" == "windows" ]; then
-    #[cygwin]simplify the path, do not let windows path pollute here.
-    #if we need some, just add here.
-    export PATH="/bin:/usr/bin:/usr/local/bin:/cygdrive/c/Program Files/nodejs"
-
-    #make sure wget can always work, no need to check certificate if there are https
-    alias wget='wget --no-check-certificate'
-fi
-
-#### sparklelin add ####
-# add environment variable
-export PATH="$PATH:~/c/Ruby/bin:~/c/Program Files (x86)/Vim/vim73"
-#### sparklelin end ####
