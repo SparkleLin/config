@@ -37,8 +37,8 @@ set directory=./.backup
 
 set smartindent
 set tabstop=4
-set shiftwidth=4
-set expandtab
+"set shiftwidth=4
+"set expandtab
 
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
