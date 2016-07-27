@@ -1,17 +1,30 @@
+
+" vundle configuration
 set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/ "载入特定目录插件
+" set rtp+=$HOME/.vim/bundle/vundle/ "Windows下
+
+call vundle#rc()
 
 " load configuration for Vundle
 if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles
 endif
 
+" vundle configuration end
+
+filetype plugin indent on
+
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
 
 set nu!
-colorscheme molokai
 syntax enable
+set background=dark
+colorscheme solarized
 syntax on
 
 au GUIEnter * simalt ~x
@@ -30,15 +43,15 @@ set backupext=.bak
 set backupdir=./.backup
 
 " set swap file directory
-set directory=./.backup
+"set directory=./.backup
 
 "set tags=./tags;
 "set autochdir
 
 set smartindent
 set tabstop=4
-"set shiftwidth=4
-"set expandtab
+set shiftwidth=4
+set expandtab
 
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
@@ -124,3 +137,25 @@ let g:ctrlp_custom_ignore = {
     \ 'dir': '\v[\/](\.(git)|BIN|Sdk|SDKSolutions|3rdParty|lost\+found|build|Resource|JBProjects|ASPxMSTRWeb|QE|docs|Resource_Editor|utilities|donet)$',
     \ 'file': '\v\.(log|jar|properties|doc|jpx|class|bat|pl|gif|jpg|png|jpeg)$'
     \}
+
+"Evervim configuration
+let g:evervim_devtoken='S=s168:U=136a623:E=158ce512e31:C=15176a00000:P=1cd:A=en-devtoken:V=2:H=c713bf7168a086fb181107b840384d2e'
+
+nnoremap el   :EvervimSetup<CR>
+nnoremap enl  :EvervimNotebookList<CR>
+nnoremap ec   :EvervimCreateNote<CR>
+
+"geeknote configuration ===================================
+
+noremap <F8> :Geeknote<CR>
+let g:GeeknoteFormat="markdown"
+
+"end of geeknote configuration ============================
+
+"vim-markdown configuration ================================
+
+let g:vim_markdown_folding_disabled = 1
+
+let g:vim_markdown_toml_formatter = 1
+"end of vim-markdown configuration =========================
+

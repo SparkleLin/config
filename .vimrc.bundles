@@ -32,6 +32,8 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'FuzzyFinder'
 "
 Plugin 'kien/ctrlp.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 "===============================================================================================
 " scripts not on GitHub
