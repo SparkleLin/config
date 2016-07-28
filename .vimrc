@@ -6,8 +6,6 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/ "载入特定目录插件
 " set rtp+=$HOME/.vim/bundle/vundle/ "Windows下
 
-call vundle#rc()
-
 " load configuration for Vundle
 if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles
@@ -24,7 +22,7 @@ behave mswin
 set nu!
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme molokai
 syntax on
 
 au GUIEnter * simalt ~x
