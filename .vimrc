@@ -38,7 +38,7 @@ iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 " set backup files
 set backup
 set backupext=.bak
-set backupdir=./.backup
+set backupdir=/home/lin.tanglin/.backup
 
 " set swap file directory
 "set directory=./.backup
@@ -157,3 +157,7 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_toml_formatter = 1
 "end of vim-markdown configuration =========================
 
+" quick fix configuration ==================================
+nmap <F6> :cn <cr>
+nmap <F7> :cp <cr>
+" end of quickfix configuration ============================
