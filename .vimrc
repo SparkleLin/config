@@ -38,7 +38,7 @@ iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 " set backup files
 set backup
 set backupext=.bak
-set backupdir=./.backup
+set backupdir=/home/lin.tanglin/.backup
 
 " set swap file directory
 "set directory=./.backup
@@ -63,14 +63,23 @@ let tlist_js_settings = 'javascript;s:string;a:array;o:object;f:function'
 let g:winManagerWindowLayout='FileExplorer|TagList'
 nmap wm :WMToggle<cr>
 
+
+" miniBufferexploer configuration"
 let g:miniBufExplMapCTabSwitchBufs=1
 let g:miniBufExplMapWindowsNavVim=1
 let g:miniBufExplMapWindowNavArrows=1
+let g:miniBufExplForceSyntaxEnable=1
+let g:miniBufExplorerMoreThanOne=2
 
 :set guioptions-=T
 
 nnoremap <silent> <F12> :A<CR>
-nnoremap <silent> <F3> :Grep<CR>
+
+"grep configuration
+nnoremap <silent> <F3> :Rgrep<CR>
+let Grep_Default_Filelist = '*.cpp *.h *.py'
+let Grep_Skip_Files = '*.bak *.swp *~'
+let Grep_Skip_Dirs = 'bin .backup'
 
 "set diffexpr=
 if has('win32')
@@ -157,3 +166,10 @@ let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_toml_formatter = 1
 "end of vim-markdown configuration =========================
 
+" quick fix configuration ==================================
+nmap <F6> :cn <cr>
+nmap <F7> :cp <cr>
+" end of quickfix configuration ============================
+
+" nunmap <C-z>
+nunmap <C-z>
