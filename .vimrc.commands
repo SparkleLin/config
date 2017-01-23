@@ -1,0 +1,39 @@
+" custom commands
+
+fu! s:utils_lash()
+	retu &ssl || !exists('+ssl') ? '/' : '\'
+endf
+
+let s:lash = s:utils_lash()
+
+fu! s:getparent(item)
+    let parent = substitute(a:item, '[\/][^\/]\+[\/:]\?$', '', '')
+    if parent == '' || parent !~ '[\/]'
+        let parent .= s:lash
+    en
+    retu parent
+endf
+
+fu! s:find_root(path, file)
+   let l:fullPath = a:path . s:lash . a:file
+   if filereadable(fullPath)
+       return a:path
+   elsei a:path == s:lash
+       return s:lash
+   else
+       return s:find_root(s:getparent(a:path), a:file)
+   en
+endf
+
+fu! s:scons_func(...)
+    let l:makeprg_bak = &makeprg
+    setlocal makeprg=scons
+    let l:make_path = s:find_root(getcwd(), "SConstruct")
+    execute "make -C " . make_path . " " . join(a:000)
+    let &makeprg=makeprg_bak
+endf
+command! -complete=dir -nargs=* Scons call s:scons_func('<args>')
+
+"key mapping
+nnoremap <C-B> :Scons -j20 mode=debug <CR>
+

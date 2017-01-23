@@ -11,6 +11,12 @@ if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles
 endif
 
+
+" load custom commands
+if filereadable(expand("~/.vimrc.commands"))
+    source ~/.vimrc.commands
+endif
+
 " vundle configuration end
 
 filetype plugin indent on
@@ -49,6 +55,7 @@ set backupdir=/home/lin.tanglin/.backup
 set smartindent
 set tabstop=4
 set shiftwidth=4
+set ts=4
 set expandtab
 
 let Tlist_Show_One_File=1
@@ -115,9 +122,11 @@ function s:SetMainScript()
   echo s:mainfile . ' set as the starting program.'
 endfunction
 
-set fileencodings=gb2312,gb18030,utf-8
-set termencoding=utf-8
-set encoding=prc 
+" set fileencodings=gb2312,gb18030,utf-8
+" set termencoding=utf-8
+" set encoding=prc 
+set fileencodings=ucs-bom,utf-8-bom,utf-8,cp936,big5,gb18030,ucs
+let &termencoding=substitute($LANG, "[a-zA-Z_-]*\.", "", "")
 
 if has("gui_gtk2")
     set shell=c:\\cygwin\\bin\\bash
@@ -170,6 +179,10 @@ let g:vim_markdown_toml_formatter = 1
 nmap <F6> :cn <cr>
 nmap <F7> :cp <cr>
 " end of quickfix configuration ============================
+
+" copen configuration ======================================
+nmap <C-O> :copen <cr>
+nmap <C-C> :cclose <cr>
 
 " nunmap <C-z>
 nunmap <C-z>
