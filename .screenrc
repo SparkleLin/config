@@ -260,7 +260,7 @@ hardstatus string "[screen %n%?: %t%?] %h"
 termcapinfo xterm|xterms|xs|rxvt ti@:te@
 defscrollback 30000
 startup_message off
-caption always "%H %c | %3n %t%? @%u%?%? [%h]%?%=%c"
+#caption always "%H %c | %3n %t%? @%u%?%? [%h]%?%=%c"
 
 hardstatus alwaysignore
 hardstatus alwayslastline '%{bW}%-w%{.wB}%n %t%{-}%+w %=%{.w}'
