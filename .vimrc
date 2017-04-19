@@ -28,7 +28,7 @@ behave mswin
 set nu!
 syntax enable
 set background=dark
-colorscheme molokai
+colorscheme desert
 syntax on
 
 au GUIEnter * simalt ~x
@@ -72,11 +72,12 @@ nmap wm :WMToggle<cr>
 
 
 " miniBufferexploer configuration"
-let g:miniBufExplMapCTabSwitchBufs=1
-let g:miniBufExplMapWindowsNavVim=1
-let g:miniBufExplMapWindowNavArrows=1
-let g:miniBufExplForceSyntaxEnable=1
-let g:miniBufExplorerMoreThanOne=2
+"let g:miniBufExplMapCTabSwitchBufs=1
+"let g:miniBufExplMapWindowsNavVim=1
+"let g:miniBufExplMapWindowNavArrows=1
+"let g:miniBufExplForceSyntaxEnable=1
+"let g:miniBufExplorerMoreThanOne=1
+"let g:bufExplorerMaxHeight=20
 
 :set guioptions-=T
 
@@ -186,3 +187,4 @@ nmap <C-C> :cclose <cr>
 
 " nunmap <C-z>
 nunmap <C-z>
+
