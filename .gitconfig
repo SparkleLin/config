@@ -1,9 +1,12 @@
 [user]
     name = ltang
-    email = ltang@microstrategy.com
+    email = lin.tanglin@alibaba-inc.com
 [core]
-	autocrlf = false
+	autocrlf = input
 	whitespace = cr-at-eol
+	protectNTFS = false
+	longpaths = true
+	editor = /usr/local/bin/vim
 [alias]
     st = status
     ci = commit
@@ -15,8 +18,19 @@
     cm = commit -m
     ui = update-index
     lf = log --pretty=format:"%h|%s"
+    dt = difftool
 [color]
     diff = auto
     status = auto
     branch = auto
-    ui = auto
+	ui = auto
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[credential]
+    helper = store
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
