@@ -6,11 +6,15 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/ "载入特定目录插件
 " set rtp+=$HOME/.vim/bundle/vundle/ "Windows下
 
-call vundle#rc()
-
 " load configuration for Vundle
 if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles
+endif
+
+
+" load custom commands
+if filereadable(expand("~/.vimrc.commands"))
+    source ~/.vimrc.commands
 endif
 
 " vundle configuration end
@@ -24,7 +28,7 @@ behave mswin
 set nu!
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme desert
 syntax on
 
 au GUIEnter * simalt ~x
@@ -40,7 +44,7 @@ iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 " set backup files
 set backup
 set backupext=.bak
-set backupdir=./.backup
+set backupdir=/home/lin.tanglin/.backup
 
 " set swap file directory
 "set directory=./.backup
@@ -51,6 +55,7 @@ set backupdir=./.backup
 set smartindent
 set tabstop=4
 set shiftwidth=4
+set ts=4
 set expandtab
 
 let Tlist_Show_One_File=1
@@ -65,14 +70,24 @@ let tlist_js_settings = 'javascript;s:string;a:array;o:object;f:function'
 let g:winManagerWindowLayout='FileExplorer|TagList'
 nmap wm :WMToggle<cr>
 
-let g:miniBufExplMapCTabSwitchBufs=1
-let g:miniBufExplMapWindowsNavVim=1
-let g:miniBufExplMapWindowNavArrows=1
+
+" miniBufferexploer configuration"
+"let g:miniBufExplMapCTabSwitchBufs=1
+"let g:miniBufExplMapWindowsNavVim=1
+"let g:miniBufExplMapWindowNavArrows=1
+"let g:miniBufExplForceSyntaxEnable=1
+"let g:miniBufExplorerMoreThanOne=1
+"let g:bufExplorerMaxHeight=20
 
 :set guioptions-=T
 
 nnoremap <silent> <F12> :A<CR>
-nnoremap <silent> <F3> :Grep<CR>
+
+"grep configuration
+nnoremap <silent> <F3> :Rgrep<CR>
+let Grep_Default_Filelist = '*.cpp *.h *.py'
+let Grep_Skip_Files = '*.bak *.swp *~'
+let Grep_Skip_Dirs = 'bin .backup'
 
 "set diffexpr=
 if has('win32')
@@ -108,9 +123,11 @@ function s:SetMainScript()
   echo s:mainfile . ' set as the starting program.'
 endfunction
 
-set fileencodings=gb2312,gb18030,utf-8
-set termencoding=utf-8
-set encoding=prc 
+" set fileencodings=gb2312,gb18030,utf-8
+" set termencoding=utf-8
+" set encoding=prc 
+set fileencodings=ucs-bom,utf-8-bom,utf-8,cp936,big5,gb18030,ucs
+let &termencoding=substitute($LANG, "[a-zA-Z_-]*\.", "", "")
 
 if has("gui_gtk2")
     set shell=c:\\cygwin\\bin\\bash
@@ -158,4 +175,16 @@ let g:vim_markdown_folding_disabled = 1
 
 let g:vim_markdown_toml_formatter = 1
 "end of vim-markdown configuration =========================
+
+" quick fix configuration ==================================
+nmap <F6> :cn <cr>
+nmap <F7> :cp <cr>
+" end of quickfix configuration ============================
+
+" copen configuration ======================================
+nmap <C-O> :copen <cr>
+nmap <C-C> :cclose <cr>
+
+" nunmap <C-z>
+nunmap <C-z>
 
