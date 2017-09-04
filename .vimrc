@@ -19,7 +19,6 @@ endif
 
 " vundle configuration end
 
-filetype plugin indent on
 
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
@@ -29,6 +28,13 @@ set nu!
 syntax enable
 set background=dark
 colorscheme desert
+
+if &diff
+    colorscheme solarized
+endif
+
+"set t_Co=256
+"colorscheme solarized
 syntax on
 
 au GUIEnter * simalt ~x
@@ -44,7 +50,7 @@ iab xtime <c-r>=strftime("%Y-%m-%d %H:%M")<C-I>
 " set backup files
 set backup
 set backupext=.bak
-set backupdir=/home/lin.tanglin/.backup
+set backupdir=/home/ltang/.backup
 
 " set swap file directory
 "set directory=./.backup
@@ -52,6 +58,7 @@ set backupdir=/home/lin.tanglin/.backup
 "set tags=./tags;
 "set autochdir
 
+filetype plugin indent on
 set smartindent
 set tabstop=4
 set shiftwidth=4
@@ -87,7 +94,7 @@ nnoremap <silent> <F12> :A<CR>
 nnoremap <silent> <F3> :Rgrep<CR>
 let Grep_Default_Filelist = '*.cpp *.h *.py'
 let Grep_Skip_Files = '*.bak *.swp *~'
-let Grep_Skip_Dirs = 'bin .backup'
+let Grep_Skip_Dirs = 'bin .backup build'
 
 "set diffexpr=
 if has('win32')
@@ -188,3 +195,6 @@ nmap <C-C> :cclose <cr>
 " nunmap <C-z>
 nunmap <C-z>
 
+" bufexplorer configuration
+nnoremap <C-x><C-b> :BufExplorer<cr>
+inoremap <C-x><C-b> <esc>:BufExplorer<cr>

@@ -1,3 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/home/ltang/Project/C/test/t.h'
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/apsarapangu/disk1/ltang/workspace/RA/_external/usr/local/etc/red_alert_web'
+let g:netrw_dirhist_2='/apsarapangu/disk1/ltang/workspace/RA/_external/usr/local/etc/ra_tools'
+let g:netrw_dirhist_3='/apsarapangu/disk1/ltang/workspace/wings_test_v2/atest/logs/2017-07-24_13:41:30'
+let g:netrw_dirhist_4='/apsarapangu/disk1/ltang/workspace/temp/dlopentest'
+let g:netrw_dirhist_5='/apsarapangu/disk1/ltang/workspace/wings/wings_manager'
+let g:netrw_dirhist_6='/apsarapangu/disk1/ltang/workspace/wings/_external/usr/local/lib/python/site-packages/py_fslib'

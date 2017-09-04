@@ -34,6 +34,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'jlanzarotta/bufexplorer'
 
 "===============================================================================================
 " scripts not on GitHub
