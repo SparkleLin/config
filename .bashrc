@@ -283,9 +283,9 @@ unset color_prompt force_color_prompt
 if [ "$OS" == "mac" ]; then
     alias ls='ls -G'
 else
-    alias ls='ls --color=auto'
-    alias dir='ls --color=auto --format=vertical'
-    alias vdir='ls --color=auto --format=long'
+    alias ls='ls --color'
+    alias dir='ls --color --format=vertical'
+    alias vdir='ls --color --format=long'
 fi
 
 # Interactive operaion
@@ -315,3 +315,70 @@ fi
 if [ "$OS" == "mac" ]; then
     export PATH="$PATH:~/Scripts"
 fi
+
+
+## term colors
+export LS_COLORS=${LS_COLORS}:di=00\;36:
+
+# User specific aliases and functions
+
+oss_auth='--id=UuJeBkxDXCkGK4ZF --key=hsfknAOmT43jAPWoAKScPnxoTCDeLw --host=oss-cn-hangzhou-zmf.aliyuncs.com'
+oss_path='oss://shenma/ltang/tmp'
+
+function put()
+{
+    if [ $# -eq 1 ]; then
+        src="$1"
+        dst="$oss_path/`basename $1`"
+    elif [ $# -eq 2 ]; then
+        src="$1"
+        dst="$oss_path/`basename $2`"
+    else
+        echo "usage: put src dst"
+        return
+    fi
+
+    if [ -d "$src" ]; then
+        cmd='uploadfromdir'
+    else
+    cmd='put'
+    echo $dst
+    fi
+
+    osscmd $cmd $src $dst $oss_auth
+}
+export put
+
+function getd()
+{
+    if [ $# -eq 1 ]; then
+        src="$oss_path/`basename $1`"
+        dst="$1"
+    elif [ $# -eq 2 ]; then
+        src="$oss_path/`basename $1`"
+        dst="$2"
+    else
+        echo "usage: getd src dst"
+        return
+    fi
+
+    osscmd downloadtodir $src $dst $oss_auth
+}
+export getd
+
+function getf()
+{
+    if [ $# -eq 1 ]; then
+        src="$oss_path/`basename $1`"
+        dst="$1"
+    elif [ $# -eq 2 ]; then
+        src="$oss_path/`basename $1`"
+        dst="$2"
+    else
+        echo "usage: getf src dst"
+        return
+    fi
+
+    osscmd get $src $dst $oss_auth
+}
+export getf

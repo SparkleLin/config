@@ -70,13 +70,7 @@ let Tlist_Exit_OnlyWindow=1
 
 let tlist_js_settings = 'javascript;s:string;a:array;o:object;f:function'
 
-"F8: Switch on/off Tagbar
-"nnoremap <silent> <F8> :TagbarToggle <CR>
-"let g:tagbar_ctags_bin = 'ctags -f - --format=2 --excmd=pattern --extra= --fields=nksaSmt myfile'
-
-let g:winManagerWindowLayout='FileExplorer|TagList'
-nmap wm :WMToggle<cr>
-
+nnoremap <silent> <F8> :TlistToggle<CR> 
 
 " miniBufferexploer configuration"
 "let g:miniBufExplMapCTabSwitchBufs=1
@@ -92,9 +86,9 @@ nnoremap <silent> <F12> :A<CR>
 
 "grep configuration
 nnoremap <silent> <F3> :Rgrep<CR>
-let Grep_Default_Filelist = '*.cpp *.h *.py'
+let Grep_Default_Filelist = '*.cpp *.h *.py *.go'
 let Grep_Skip_Files = '*.bak *.swp *~'
-let Grep_Skip_Dirs = 'bin .backup build'
+let Grep_Skip_Dirs = 'bin .backup build test'
 
 "set diffexpr=
 if has('win32')
@@ -169,13 +163,6 @@ nnoremap el   :EvervimSetup<CR>
 nnoremap enl  :EvervimNotebookList<CR>
 nnoremap ec   :EvervimCreateNote<CR>
 
-"geeknote configuration ===================================
-
-noremap <F8> :Geeknote<CR>
-let g:GeeknoteFormat="markdown"
-
-"end of geeknote configuration ============================
-
 "vim-markdown configuration ================================
 
 let g:vim_markdown_folding_disabled = 1
@@ -198,3 +185,34 @@ nunmap <C-z>
 " bufexplorer configuration
 nnoremap <C-x><C-b> :BufExplorer<cr>
 inoremap <C-x><C-b> <esc>:BufExplorer<cr>
+
+" vim shell configuration
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+    let isfirst = 1
+    let words = []
+    for word in split(a:cmdline)
+        if isfirst
+            let isfirst = 0  " don't change first word (shell command)
+        else
+            if word[0] =~ '\v[%#<]'
+                let word = expand(word)
+            endif
+            let word = shellescape(word, 1)
+        endif
+        call add(words, word)
+    endfor
+    let expanded_cmdline = join(words)
+    botright new
+    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+    call setline(1, 'You entered:  ' . a:cmdline)
+    call setline(2, 'Expanded to:  ' . expanded_cmdline)
+    call append(line('$'), substitute(getline(2), '.', '=', 'g'))
+    silent execute '$read !'. expanded_cmdline
+    1
+endfunction
+
+command! -complete=file -nargs=* Git call s:RunShellCommand('git '.<q-args>)
+command! -complete=file -nargs=* Svn call s:RunShellCommand('svn '.<q-args>)
+
+let g:go_version_warning = 0
