@@ -3,7 +3,7 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/ "载入特定目录插件
+set rtp+=~/.vim/bundle/Vundle.vim "载入特定目录插件
 " set rtp+=$HOME/.vim/bundle/vundle/ "Windows下
 
 " load configuration for Vundle
@@ -86,7 +86,7 @@ nnoremap <silent> <F12> :A<CR>
 
 "grep configuration
 nnoremap <silent> <F3> :Rgrep<CR>
-let Grep_Default_Filelist = '*.cpp *.h *.py *.go'
+let Grep_Default_Filelist = '*.cpp *.h *.py *.go *.java'
 let Grep_Skip_Files = '*.bak *.swp *~'
 let Grep_Skip_Dirs = 'bin .backup build test'
 
@@ -144,6 +144,7 @@ let g:ctrlp_by_filename = 1
 let g:ctrlp_use_caching = 1000
 let g:ctrlp_max_depth = 10
 let g:ctrlp_cache_dir = '~/.cache/ctrlp'
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 
 if has("gui_gtk2")
     set wildignore+=*/tmp/*,*/test/*,*.jar,*.swp

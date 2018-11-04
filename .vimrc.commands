@@ -37,6 +37,22 @@ command! -complete=dir -nargs=* Scons call s:scons_func('<args>')
 "key mapping
 nnoremap <C-B> :Scons -j20 mode=debug <CR>
 
+fu! s:rsync_func(to, excludes)
+    let l:rsync_path = s:find_root(getcwd(), "Sconstruct")
+    let l:exclude_path = ""
+
+    for path in a:excludes
+        let l:exclude_path = exclude_path . " --exclude='" . path . "'"
+    endfor
+
+    let l:command= "!rsync -v --progress -artlzu " . exclude_path . " " . rsync_path . a:to 
+    echo command
+    execute "!rsync -v --progress --delete -artlzu " . exclude_path . " " . rsync_path . " " .a:to 
+endf
+
+command! -complete=dir -nargs=* Async call s:rsync_func("ltang@100.81.164.88:/home/ltang/workspace/rsync/", ["_external", ".git"])
+"key mapping
+nnoremap <C-R> :Async <CR>
 
 " output shell command to new window
 command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
